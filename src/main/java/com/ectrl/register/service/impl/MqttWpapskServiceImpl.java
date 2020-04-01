@@ -58,7 +58,7 @@ public class MqttWpapskServiceImpl extends ServiceImpl<MqttWpapskMapper, MqttWpa
         //获取实体类privatekey和publickey
         MqttWpapskEntity mqttWpapskEntity =  this.getOne(queryWrapper);
         //用公钥加密
-        return RSAUtil.encipher(content,mqttWpapskEntity.getPublicKey());
+        return RSAUtil.encipher(content.replaceAll(" +", "+"),mqttWpapskEntity.getPublicKey());
         }catch (Exception ex)
         {
 
