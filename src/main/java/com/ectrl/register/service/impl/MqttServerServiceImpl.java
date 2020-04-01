@@ -77,7 +77,7 @@ public class MqttServerServiceImpl extends ServiceImpl<MqttServerMapper, MqttSer
         mqttServerEntity.setSign(sign);
         this.update(mqttServerEntity,queryWrapper);
         //加密返回数据
-        String CA =String.format("certid=%s&created=%s&expried=%s&sign=%s",mqttServerEntity.getSn()+mqttServerEntity.getMac()+mqttServerEntity.getCrc(),mqttServerEntity.getCreated().getTime(),mqttServerEntity.getExpired().getTime(),mqttServerEntity.getSign());
+        String CA =String.format("certid=%s&created=%s&expired=%s&sign=%s",mqttServerEntity.getSn()+mqttServerEntity.getMac()+mqttServerEntity.getCrc(),mqttServerEntity.getCreated().getTime(),mqttServerEntity.getExpired().getTime(),mqttServerEntity.getSign());
         return  RSAUtil.encipher(CA,publicKey.replaceAll(" +","+"));
 
 

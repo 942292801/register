@@ -82,7 +82,7 @@ public class MqttDeviceServiceImpl extends ServiceImpl<MqttDeviceMapper, MqttDev
         mqttDeviceEntity.setSign(sign);
         this.update(mqttDeviceEntity,queryWrapper);
         //加密返回数据
-        String CA =String.format("certid=%s&created=%s&expried=%s&sign=%s",mqttDeviceEntity.getSn()+mqttDeviceEntity.getMac()+mqttDeviceEntity.getCrc(),mqttDeviceEntity.getCreated().getTime(),mqttDeviceEntity.getExpired().getTime(),mqttDeviceEntity.getSign());
+        String CA =String.format("certid=%s&created=%s&expired=%s&sign=%s",mqttDeviceEntity.getSn()+mqttDeviceEntity.getMac()+mqttDeviceEntity.getCrc(),mqttDeviceEntity.getCreated().getTime(),mqttDeviceEntity.getExpired().getTime(),mqttDeviceEntity.getSign());
         return  RSAUtil.encipher(CA,publicKey.replaceAll(" +","+"));
     }
 
