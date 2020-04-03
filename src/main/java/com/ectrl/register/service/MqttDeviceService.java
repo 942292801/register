@@ -2,6 +2,7 @@ package com.ectrl.register.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ectrl.register.domain.MqttDeviceEntity;
+import com.ectrl.register.dto.BaseResult;
 
 public interface MqttDeviceService extends IService<MqttDeviceEntity> {
 
@@ -12,5 +13,5 @@ public interface MqttDeviceService extends IService<MqttDeviceEntity> {
      *@Param: [enCertId加密的信息 sn(16)+mac(12) +crc16, publicKey]
      *@return: java.lang.String
      */
-    String applyDeviceCA(String enCertId, String publicKey) throws Exception;
+    BaseResult applyDeviceCA(String enCertId, String publicKey) throws Exception;
 }

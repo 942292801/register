@@ -50,18 +50,17 @@ public class MqttWpapskServiceImpl extends ServiceImpl<MqttWpapskMapper, MqttWpa
     @Override
     public String encryptString(String content) throws Exception {
         try {
-
             //加密
-        QueryWrapper<MqttWpapskEntity> queryWrapper = new QueryWrapper<>();
-        //构造数据库语句
-        queryWrapper.eq(ConstantUtil.MYSQL_SERVER_NAME,ConstantUtil.SERVER_NAME_REGISTER);
-        //获取实体类privatekey和publickey
-        MqttWpapskEntity mqttWpapskEntity =  this.getOne(queryWrapper);
-        //用公钥加密
-        return RSAUtil.encipher(content.replaceAll(" +", "+"),mqttWpapskEntity.getPublicKey());
-        }catch (Exception ex)
+            QueryWrapper<MqttWpapskEntity> queryWrapper = new QueryWrapper<>();
+            //构造数据库语句
+            queryWrapper.eq(ConstantUtil.MYSQL_SERVER_NAME,ConstantUtil.SERVER_NAME_REGISTER);
+            //获取实体类privatekey和publickey
+            MqttWpapskEntity mqttWpapskEntity =  this.getOne(queryWrapper);
+            //用公钥加密
+            return RSAUtil.encipher(content.replaceAll(" +", "+"),mqttWpapskEntity.getPublicKey());
+        }catch (Exception e)
         {
-
+            e.printStackTrace();
             return  null;
         }
     }
@@ -75,10 +74,10 @@ public class MqttWpapskServiceImpl extends ServiceImpl<MqttWpapskMapper, MqttWpa
             //获取实体类privatekey和publickey
             MqttWpapskEntity mqttWpapskEntity = this.getOne(queryWrapper);
             //用私钥解密
-            String str = RSAUtil.decipher(content.replaceAll(" +", "+"), mqttWpapskEntity.getPrivateKey());
-            return str;
-        }catch (Exception ex)
+            return RSAUtil.decipher(content.replaceAll(" +", "+"), mqttWpapskEntity.getPrivateKey());
+        }catch (Exception e)
         {
+            e.printStackTrace();
             return  null;
         }
     }

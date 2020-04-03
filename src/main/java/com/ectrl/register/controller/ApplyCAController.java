@@ -30,24 +30,16 @@ public class ApplyCAController {
     @RequestMapping("/server")
     public BaseResult applyServerCA(@RequestParam(value = "certid") String certId, @RequestParam(value = "key") String key) throws Exception {
 
-        String CA = mqttServerService.applyServerCA(certId,key);
-        if (StringUtils.isEmpty(CA)){
-            return BaseResult.fail("申请主服务器数字证书失败");
-        }else {
-            return BaseResult.success("申请主服务器数字证书成功",CA);
-        }
+        return mqttServerService.applyServerCA(certId,key);
+
 
     }
 
     @RequestMapping("/device")
     public BaseResult applyDeviceCA(@RequestParam(value = "certid") String certId, @RequestParam(value = "key") String key) throws Exception {
 
-        String CA = mqttDeviceService.applyDeviceCA(certId,key);
-        if (StringUtils.isEmpty(CA)){
-            return BaseResult.fail("申请设备数字证书失败");
-        }else {
-            return BaseResult.success("申请设备数字证书成功",CA);
-        }
+        return mqttDeviceService.applyDeviceCA(certId,key);
+
 
     }
 
