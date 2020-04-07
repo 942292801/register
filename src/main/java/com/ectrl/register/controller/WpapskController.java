@@ -5,6 +5,8 @@ import com.ectrl.register.domain.MqttWpapskEntity;
 import com.ectrl.register.dto.BaseResult;
 import com.ectrl.register.dto.MqttWpapskDTO;
 import com.ectrl.register.service.MqttWpapskService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @RestController
 @RequestMapping("/request")
+@Api(value = "Wpapsk的相关信息接口",tags = "信息安全的相关信息接口")
 public class WpapskController {
 
     @Autowired
@@ -36,6 +39,7 @@ public class WpapskController {
     *@return: com.ectrl.authentication.dto.BaseResult
     */
     @RequestMapping(value = "/publickey",method = RequestMethod.GET)
+    @ApiOperation(value = "获取RSA公钥",notes = "获取该服务器RSA公钥信息,无参数",httpMethod = "GET")
     public BaseResult getPublicKey(){
         MqttWpapskEntity mqttWpapskEntity = mqttWpapskService.getKey();
         if (mqttWpapskEntity == null){
@@ -56,7 +60,7 @@ public class WpapskController {
     *@Param: []
     *@return: com.ectrl.authentication.dto.BaseResult
     */
-    @RequestMapping("/updatekey")
+   /* @RequestMapping("/updatekey")
     public BaseResult setKey()  {
         if(mqttWpapskService.updateKey()){
             return BaseResult.success("更新公钥成功");
@@ -64,7 +68,7 @@ public class WpapskController {
         }else {
             return BaseResult.fail("更新公钥失败");
         }
-    }
+    }*/
 
 
     /**
@@ -74,7 +78,8 @@ public class WpapskController {
     *@Param: [content]
     *@return: com.ectrl.authentication.dto.BaseResult
     */
-    @RequestMapping("/encrypt")
+    @RequestMapping(value ="/encrypt" ,method = RequestMethod.POST)
+    @ApiOperation(value = "RSA公钥加密数据",notes = "该服务器RSA公钥加密数据,参数content：需加密内容",httpMethod = "POST")
     public BaseResult encryptStr(@RequestParam(value = "content") String content) throws Exception {
             String encryptStr = mqttWpapskService.encryptString(content);
             if (StringUtils.isEmpty(encryptStr) ){
@@ -93,7 +98,8 @@ public class WpapskController {
     *@Param: [content]
     *@return: com.ectrl.authentication.dto.BaseResult
     */
-    @RequestMapping("/decrypt")
+    @RequestMapping(value = "/decrypt",method = RequestMethod.POST)
+    @ApiOperation(value = "RSA公钥解密数据",notes = "该服务器RSA公钥解密数据,参数content：需解密内容",httpMethod = "POST")
     public BaseResult decryptStr(@RequestParam(value = "content") String content ) throws Exception {
             String encryptStr = mqttWpapskService.decryptString(content);
             if (StringUtils.isEmpty(encryptStr)){
